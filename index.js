@@ -3,7 +3,7 @@ const path = require('path')
 const cors  = require('cors')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser');
-const Utils = require('./utils.js');
+const Utils = require('./Utils.js');
 const cron = require('node-cron');
 
 var app = express();
