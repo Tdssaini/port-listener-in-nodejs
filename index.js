@@ -3,7 +3,8 @@ const path = require('path')
 const cors  = require('cors')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser');
-const admin = require('firebase-admin');
+const Utils = require('./utils.js');
+const cron = require('node-cron');
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')))
@@ -12,6 +13,12 @@ app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.render('pages/index'))
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.use(express.static(__dirname + 'public'));
+
+cron.schedule('*/1 * * * *', () => {
+  if(process.env.EXECUTE_SCHEDULED_JOB == "TRUE"){
+    Utils.validateAndSendDataToSalesforce();
+  }
+});
 
 var corsOptions = {
   origins: [

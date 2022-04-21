@@ -1,29 +1,21 @@
-const Patient = require('./models/Patient.js');
-const DietPlanLeads = require("./models/DietPlanLead.js");
+const DeviceData = require('./models/DeviceData.js');
+const Utils = require('./utils.js');
 
 module.exports = {
 
-  writeHeartRateData: async function(req,res){
-    var returnData = await Patient.forge({
-      deviceId: req.body.deviceId,
-      userId: req.body.userId,
-      email: req.body.heartRate,
-      beatsPerMinute: req.body.beatsPerMinute
-    }).save();
-    res.json({'status':'success','data' : returnData});
-  },
-  writeOximeterData : async function(req,res){
-    try{
-      var returnData = await Patient.forge({
+  writeSensorData: async function(req,res){
+    if(Utils.isDataValid(req.body.sensorData,req.body.deviceType)){
+      var returnData = await DeviceData.forge({
         deviceId: req.body.deviceId,
-        userId: req.body.userId,
-        email: req.body.heartRate,
-        beatsPerMinute: req.body.beatsPerMinute
+        userAccountId: req.body.userAccountId,
+        deviceType : req.body.deviceType,
+        sensorData: req.body.sensorData,
+        synced: false
       }).save();
-      res.json({'status':'success'});
-    }catch(e){
-      console.log(e);
-      res.json({'status':'error'});
+      res.json({'status':'success','data' : returnData});
+    }else{
+      res.json({'status':'error','data' : "Invalid Data"});
     }
   }
+
 }

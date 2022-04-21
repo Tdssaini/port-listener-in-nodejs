@@ -3,6 +3,5 @@ const router = express.Router();
 const apis = require('./apis.js');
 
 //V1 APIs
-router.post("/writeHeartRateData",apis.writeHeartRateData);
-router.post("/writeOximeterData",apis.writeOximeterData);
+router.post("/writeSensorData",apis.writeSensorData);
 module.exports = router;
