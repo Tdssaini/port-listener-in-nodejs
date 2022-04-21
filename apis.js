@@ -1,5 +1,5 @@
 const DeviceData = require('./models/DeviceData.js');
-const Utils = require('./utils.js');
+const Utils = require('./Utils.js');
 
 module.exports = {
 
