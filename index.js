@@ -14,7 +14,7 @@ app.get('/', (req, res) => res.render('pages/index'))
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.use(express.static(__dirname + 'public'));
 
-cron.schedule('*/1 * * * *', () => {
+cron.schedule(process.env.CRON_JOB_EXPRESSION, () => {
   if(process.env.EXECUTE_SCHEDULED_JOB == "TRUE"){
     Utils.validateAndSendDataToSalesforce();
   }
