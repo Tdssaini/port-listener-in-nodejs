@@ -3,8 +3,8 @@ const path = require('path')
 const cors  = require('cors')
 const PORT = process.env.PORT || 5000
 const bodyParser = require('body-parser');
+const { SerialPort} = require('serialport');
 const Utils = require('./Utils.js');
-const cron = require('node-cron');
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')))
@@ -14,23 +14,24 @@ app.get('/', (req, res) => res.render('pages/index'))
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.use(express.static(__dirname + 'public'));
 
-cron.schedule(process.env.CRON_JOB_EXPRESSION, () => {
-  if(process.env.EXECUTE_SCHEDULED_JOB == "TRUE"){
-    Utils.validateAndSendDataToSalesforce();
-  }
-});
-
 var corsOptions = {
   origins: [
-    "https://iot-middleware-tarandeep.herokuapp.com",
+    "localhost:5000",
   ],
   credentials: true,
   optionSuccessStatus: 200
-}
-
+};
 app.use(cors(corsOptions));
 app.set('json spaces',2);
 app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
 
-app.use(require('./apis_router'));
+
+SerialPort.list().then(ports => {
+  ports.forEach(function(port) {
+      //console.log(port.path)
+  })
+});
+
+Utils.listenToPort('/dev/ttyACM0',9600);
+//Utils.listenToPort('COM14',115200);

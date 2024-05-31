@@ -1,6 +1,6 @@
 {
-  "name": "IoT Middleware",
-  "description": "IoT Middleware, developed by Tarandeep Singh for BITS M.Tech Dissertation",
+  "name": "IoT Port Listener",
+  "description": "IoT Port Listener, developed by Tarandeep Singh for BITS M.Tech Dissertation",
   "repository": "https://github.com/heroku/node-js-getting-started",
   "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/main/public/node.svg",
   "keywords": ["node", "express", "heroku"],
